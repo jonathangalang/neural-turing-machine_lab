@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 # default for now: run the training script
-CMD ["python", "main.py"]
+ENTRYPOINT ["python", "main.py"]
