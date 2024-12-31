@@ -20,5 +20,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # copy in the remainder of the code
 COPY . /app
 
-# default for now: run the training script
+# entry point for this codebase is main
 ENTRYPOINT ["python3", "main.py"]
+
+# default arguments: use default config
+CMD ["run", "--config", "experiments/configs/default_config.yaml"]
