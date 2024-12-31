@@ -1,5 +1,7 @@
 import torch
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
+
+from src.utils.logs import get_logger
 
 UINT8_MAX = (2 ** 8) - 1
 
@@ -37,3 +39,12 @@ def generate_copy_problem(signal_length, delay_length, batch_size):
 
     return (inputs, targets)
 
+def sanity_check():
+    logger = get_logger(__name__)
+    inputs, targets = generate_copy_problem(25, 50, 100)
+    logger.info('Successfully generated inputs and targets for copy problem.')
+    if inputs.shape == targets.shape:
+        logger.info('Success: Input and target shapes match.')
+    else:
+        logger.error('Failure: Input and target shapes do not match.')
+    
