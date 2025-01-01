@@ -24,4 +24,4 @@ COPY . /app
 ENTRYPOINT ["python3", "main.py"]
 
 # default arguments: use default config
-CMD ["run", "--config", "experiments/configs/default_config.yaml"]
+CMD ["run", "--config", "experiments/configs/lstm_config.yaml"]
