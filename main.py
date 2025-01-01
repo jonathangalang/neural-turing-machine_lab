@@ -15,7 +15,6 @@ def parse_args():
     parser = argparse.ArgumentParser("NTM Lab")
     parser.add_argument("run", help="Run a training experiment")
     parser.add_argument("--config", type=str,
-                        default="experiments/configs/default_config.yaml",
                         help="Path to the YAML config file.")
     return parser.parse_args()
 
