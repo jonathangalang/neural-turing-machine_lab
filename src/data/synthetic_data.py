@@ -42,9 +42,13 @@ def generate_copy_problem(signal_length, delay_length, batch_size):
 def sanity_check():
     logger = get_logger(__name__)
     inputs, targets = generate_copy_problem(25, 50, 100)
-    logger.info('Successfully generated inputs and targets for copy problem.')
+    logger.info('Success: Generated inputs and targets for copy problem.')
     if inputs.shape == targets.shape:
         logger.info('Success: Input and target shapes match.')
     else:
         logger.error('Failure: Input and target shapes do not match.')
+    if inputs.get_device() != -1 and targets.get_device() != -1:
+        logger.info('Success: Generated tensors on GPU.')
+    else:
+        logger.warning('Failure: Generated tensors were not placed on the GPU.')
     

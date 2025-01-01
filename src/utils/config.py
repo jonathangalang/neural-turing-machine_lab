@@ -8,11 +8,14 @@ def enable_logs():
     logs.configure()
     torch.set_default_device('cuda')
     if 'cuda' not in torch.get_default_device().type:
-        logger.warning('No GPU detected. Running with CPU...')
+        logger.warning('Failure: No GPU detected. Running with CPU...')
     else:
-        logger.info('Successfully set default device to CUDA.')
+        logger.info('Success: Set default device to CUDA.')
 
 def load_config(config_path):
     with open(config_path, 'r') as config_file:
         config = yaml.safe_load(config_file)
-    print(config)
+    return config
+
+def load_global_config():
+    return load_config('experiments/configs/global.yaml')

@@ -13,17 +13,36 @@ def parse_args():
         
     """
     parser = argparse.ArgumentParser("NTM Lab")
-    parser.add_argument("run", help="Run a training experiment")
-    parser.add_argument("--config", type=str,
-                        help="Path to the YAML config file.")
+    subparsers = parser.add_subparsers(dest="mode", required=True,
+                                      help="Choose an action: train or run experiments")
+
+    # train subcommand
+    parser_train = subparsers.add_parser("train", help="Run the training pipeline.")
+    parser_train.add_argument(
+        "--config",
+        type=str,
+        default="experiments/configs/lstm.yaml",
+        help="Path to the training config file."
+    )
+
+    # experiment subcommand
+    parser_experiment = subparsers.add_parser("experiment", help="Run experiment analysis.")
+    parser_experiment.add_argument(
+        "--config",
+        type=str,
+        default="experiments/configs/experiment.yaml",
+        help="Path to the experiment config file."
+    )
+
     return parser.parse_args()
 
 if __name__ == '__main__':
     argv = parse_args()
     
     config.enable_logs()
-
-    config.load_config(argv.config)
     
-    sanity_check()
+    global_config = config.load_global_config()
+    
+    if argv.mode == "train":
+        sanity_check()
 
