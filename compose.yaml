@@ -1,5 +1,3 @@
-version: '3.8'
-
 # save location for model weights, experiment results, etc.
 x-output-location: &output-location
   build:
