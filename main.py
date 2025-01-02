@@ -3,7 +3,7 @@ import os
 import sys
 
 from src.utils import config
-from src.data.synthetic_data import sanity_check
+from sanity_check import devtest
 
 def parse_args():
     """
@@ -44,5 +44,5 @@ if __name__ == '__main__':
     global_config = config.load_global_config()
     
     if argv.mode == "train":
-        sanity_check()
+        devtest(global_config['output_dir'])
 
