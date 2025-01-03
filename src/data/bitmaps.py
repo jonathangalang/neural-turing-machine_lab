@@ -18,12 +18,15 @@ def write_to_bitmap(data_tensor, out_dir, filename='signal.png'):
 
     # expand each int as a binary vector
     binary_sequence = np.unpackbits(raw_sequence, axis=0)
-    logger.info(f'binary sequence of shape {binary_sequence.shape}:\n{binary_sequence}')
     
     # scale 1s for contrast
     binary_sequence *= 255
-    
+
     # convert to PIL image
     img = Image.fromarray(binary_sequence, mode='L')
-    img.save(out_path)
-
+    try:
+        img.save(out_path)
+    except Exception:
+        logger.error(f'Failed to write uint8 tensor of shape {data_tensor.shape} to location {out_path}')
+    else:
+        logger.info(f'Success: wrote uint8 tensor of shape {data_tensor.shape} to location {out_path}')

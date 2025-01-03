@@ -4,12 +4,8 @@
 setup:
 	@echo "Setting up the outputs directory..."
 	mkdir -p outputs
-	chown 1000:1000 outputs
-	chmod 775 outputs
 	@echo "Setting up the models directory..."
 	mkdir -p models
-	chown 1000:1000 models
-	chmod 775 models
 	@echo "Creating .env file for compose..."
 	echo "HOST_UID=$(shell id -u)" > .env
 	echo "HOST_GID=$(shell id -g)" >> .env
@@ -40,9 +36,13 @@ clean:
 	@docker-compose down -v
 	@echo "Removing non-essential outputs..."
 	@rm -rf outputs
-	@rm -rf models
 	@rm -f .env
 	@echo "Clean complete."
+
+rebuild: clean setup
+	@echo "Starting fresh rebuild..."
+	docker-compose --env-file .env build --no-cache
+	@echo "Process completed."
 
 # Help target: List available make commands
 help:
@@ -52,4 +52,3 @@ help:
 	@echo "  make experiments    - Setup and start the experiments service"
 	@echo "  make clean         - Stop all services and clean up outputs directory"
 	@echo "  make help          - Display this help message"
-

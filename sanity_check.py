@@ -14,6 +14,6 @@ def devtest(output_dir):
         logger.info('Success: Generated tensors on GPU.')
     else:
         logger.warning('Failure: Generated tensors were not placed on the GPU.')
-    logger.info(f'Writing tensor {inputs[0]} to file...')
     write_to_bitmap(inputs[0], output_dir)
+    logger.info("Completed: End sanity check")
 
