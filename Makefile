@@ -10,6 +10,7 @@ setup:
 	echo "HOST_UID=$(shell id -u)" > .env
 	echo "HOST_GID=$(shell id -g)" >> .env
 	echo "USERNAME=$(shell id -nu)" >> .env
+	echo "COMPOSE_PROJECT_NAME=ntm_lab" >> .env
 	@echo "Setup complete."
 
 # Start train-lstm service
@@ -33,7 +34,7 @@ experiments: setup
 # Clean target: Stop all services and remove outputs directory
 clean:
 	@echo "Stopping all Docker services and cleaning up..."
-	@docker-compose down -v
+	@docker-compose down -v --remove-orphans
 	@echo "Removing non-essential outputs..."
 	@rm -rf outputs
 	@rm -f .env
