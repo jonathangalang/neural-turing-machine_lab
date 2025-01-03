@@ -8,9 +8,6 @@ from src.utils.logs import get_logger
 def write_to_bitmap(data_tensor, out_dir, filename='signal.png'):
 
     logger = get_logger(__name__)
-
-    # ensure output directory exists
-    os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, filename)
 
     # move tensor to CPU and detach from computational graphs

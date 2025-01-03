@@ -1,34 +1,33 @@
 # save location for model weights, experiment results, etc.
-x-output-location: &output-location
+x-shared-settings: &shared-settings
   build:
     context: .
     dockerfile: Dockerfile
+    args:
+      UID: "${HOST_UID}"
+      GID: "${HOST_GID}"
+      USERNAME: "${USERNAME}"
   volumes:
-    # mount ./outputs at /app/outputs inside the container
     - ./outputs:/app/outputs
 
 services:
   train-lstm:
-    <<: *output-location
+    <<: *shared-settings
     container_name: train-lstm
     command: ["train", "--config", "experiments/configs/lstm.yaml"] 
     environment:
       - MODEL_TYPE=LSTM
 
   train-ntm:
-    <<: *output-location
+    <<: *shared-settings
     container_name: train-ntm
     command: ["train", "--config", "experiments/configs/ntm.yaml"]
     environment:
       - MODEL_TYPE=NTM
 
   experiments:
-    <<: *output-location
+    <<: *shared-settings
     container_name: experiments
     command: ["experiment", "--config", "experiments/configs/experiment.yaml"]
     environment:
       - EXPERIMENT_LOG_PATH=/app/outputs
-
-volumes:
-  data-volume:
-

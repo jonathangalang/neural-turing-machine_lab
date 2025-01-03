@@ -10,15 +10,30 @@ RUN apt-get update && apt-get install -y \
 	python3-pip \
 	&& rm -rf /var/lib/apt/lists/*
 
+ARG USERNAME=mluser
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd --gid $GID $USERNAME \
+	&& useradd --uid $UID --gid $GID --create-home $USERNAME \
+	&& mkdir /app \
+	&& mkdir /app/outputs \
+	&& mkdir /app/models \
+	&& chown "$USERNAME":"$USERNAME" /app \
+	&& chown "$USERNAME":"$USERNAME" /app/outputs \
+	&& chown "$USERNAME":"$USERNAME" /app/models
+
+USER $USERNAME
+
 # set the working directory
 WORKDIR /app
 
 # copy in repo requirements
-COPY requirements.txt /app
+COPY --chown="$USERNAME":"$USERNAME" requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy in the remainder of the code
-COPY . /app
+COPY --chown="$USERNAME":"$USERNAME" . /app
 
 # entry point for this codebase is main
 ENTRYPOINT ["python3", "main.py"]
