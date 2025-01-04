@@ -14,20 +14,20 @@ services:
   train-lstm:
     <<: *shared-settings
     container_name: train-lstm
-    command: ["train", "--config", "experiments/configs/lstm.yaml"] 
+    command: ["train", "--config", "configs/models/lstm.yaml"] 
     environment:
       - MODEL_TYPE=LSTM
 
   train-ntm:
     <<: *shared-settings
     container_name: train-ntm
-    command: ["train", "--config", "experiments/configs/ntm.yaml"]
+    command: ["train", "--config", "configs/models/ntm.yaml"]
     environment:
       - MODEL_TYPE=NTM
 
   experiments:
     <<: *shared-settings
     container_name: experiments
-    command: ["experiment", "--config", "experiments/configs/experiment.yaml"]
+    command: ["experiment", "--config", "configs/experiment.yaml"]
     environment:
       - EXPERIMENT_LOG_PATH=/app/outputs
