@@ -52,12 +52,11 @@ if __name__ == '__main__':
 
     # read settings that apply to all builds/modes
     global_config = config.load_global_config()
-    logger.info(f'Received global config object {global_config}')
+    logger.info(f'Received global config object')
 
     # read settings for this specific build
     logger.info(f'Acquiring runtime config from {argv.config}')
     runtime_config = config.load_config(argv.config)
-    logger.info(f'Read config object {runtime_config}')
 
     if argv.mode == 'train':
         train_model(runtime_config)
