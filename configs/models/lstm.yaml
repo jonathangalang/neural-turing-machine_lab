@@ -1,0 +1,17 @@
+model:
+  type: "lstm"
+  input_size: 8
+  hidden_size: 64
+  num_layers: 2
+  dropout_rate: 0.5
+  bidirectional: false
+
+hyperparameters:
+  learning_rate: 0.001
+  optimizer: "adam"
+  weight_decay: 1e-5
+
+training:
+  epochs: 50
+  batch_size: 64
+  loss_fn: "CrossEntropyLoss"
