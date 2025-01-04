@@ -18,4 +18,4 @@ def load_config(config_path):
     return config
 
 def load_global_config():
-    return load_config('experiments/configs/global.yaml')
+    return load_config('configs/global.yaml')
