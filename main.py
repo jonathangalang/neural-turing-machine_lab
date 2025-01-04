@@ -7,34 +7,38 @@ from src.utils.logs import get_logger
 from src.training.trainer import train_model
 from experiments.run_experiment import run_experiment
 
+
 def parse_args():
     """
+    Parses command-line arguments.
 
     Returns:
-        argparse.Namespace: parsed arguments
-        
+        argparse.Namespace: Parsed arguments
     """
-    parser = argparse.ArgumentParser('NTM Lab')
+    parser = argparse.ArgumentParser(description='NTM Lab')
+    
+    # Define subparsers for different modes
     subparsers = parser.add_subparsers(dest='mode', required=True,
-                                      help='Choose an action: train or run experiments')
-
-    # train subcommand
-    parser_train = subparsers.add_parser('train', help='Run the training pipeline.')
-    parser_train.add_argument(
+        help='Choose an action: train or experiment')
+    
+    # Parent parser for config
+    config_parser = argparse.ArgumentParser(add_help=False)
+    config_parser.add_argument(
         '--config',
         type=str,
         default='configs/models/lstm.yaml',
-        help='Path to the training config file.'
-    )
+        help='Path to the configuration file.'
+    )    
 
-    # experiment subcommand
-    parser_experiment = subparsers.add_parser('experiment', help='Run experiment analysis.')
-    parser_experiment.add_argument(
-        '--config',
-        type=str,
-        default='configs/experiment.yaml',
-        help='Path to the experiment config file.'
-    )
+    # Train subcommand
+    parser_train = subparsers.add_parser('train', 
+        parents=[config_parser],
+        help='Run the training pipeline.')
+    
+    # Experiment subcommand
+    parser_experiment = subparsers.add_parser('experiment', 
+        parents=[config_parser],
+        help='Run experiment analysis.')
 
     return parser.parse_args()
 

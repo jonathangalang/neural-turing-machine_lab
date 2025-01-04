@@ -37,6 +37,3 @@ COPY --chown="$USERNAME":"$USERNAME" . /app
 
 # entry point for this codebase is main
 ENTRYPOINT ["python3", "main.py"]
-
-# default arguments: use default config
-CMD ["run", "--config", "experiments/configs/lstm_config.yaml"]
