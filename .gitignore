@@ -1,6 +1,6 @@
 # Output directories
-outputs/
-models/
+./outputs/
+./models/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
