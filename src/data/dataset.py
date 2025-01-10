@@ -12,12 +12,14 @@ class CopyProblemDataset(IterableDataset):
         max_seq_len: The maximum number of ints to generate
         max_delay: The maximum number of time-steps to delay before the recall signal
         batch_size: The number of sample sequences to draw
+        unsqueeze: Flag to add singleton dimension to targets
     """
-    def __init__(self, batch_size, max_seq_len, max_delay):
+    def __init__(self, batch_size, max_seq_len, max_delay, unsqueeze=True):
         super().__init__()
         self.max_seq_len = max_seq_len
         self.max_delay = max_delay
         self.batch_size = batch_size
+        self.unsqueeze = unsqueeze
 
     def generate(self):
         
@@ -36,7 +38,10 @@ class CopyProblemDataset(IterableDataset):
             inputs, targets = synthetic_data.generate_copy_problem(
                 sequence_len, delay_len, self.batch_size
             )
-
+            
+        if unsqueeze:
+            yield (inputs.unsqueeze(2), targets.unsqueeze(2))
+        else:
             yield (inputs, targets)
 
     def __iter__(self):
